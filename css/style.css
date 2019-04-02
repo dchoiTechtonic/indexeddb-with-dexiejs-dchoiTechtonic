@@ -6,8 +6,17 @@ form {
 table.table.table-striped{
   width: 80vw;
   margin:auto;
+  color:pink;
 }
-
 h1 {
   text-align:center;
+  color:pink;
+}
+button {
+  color: white;
+  background-color: pink;
+}
+.diana {
+  background-color:pink;
+  color:white;
 }
