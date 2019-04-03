@@ -1,8 +1,29 @@
+function onDatabaseReady() {
+    showTable() // DO NOT TOUCH THIS LINE until step #4
+    document.querySelector(".btn").addEventListener("click",function(event){
+      event.preventDefault();
+      document.querySelector("form").reset();
+      document.getElementById("inputTitle").setAttribute('value','');
+      document.getElementById("inputAuthor").setAttribute('value','');
+      document.getElementById("inputPages").setAttribute('value','');
+      document.getElementById("inputCover").setAttribute('value','');
+      document.getElementById("inputSynopsis").setAttribute('value','');
+      document.getElementById("inputDate").setAttribute('value','');
+      document.getElementById("inputRating").setAttribute('value','');
+      document.getElementById("addBook").innerHTML="❀ Add Book... ❀"
+      document.getElementById("formSubmit").innerHTML="Submit"
+    });
+    console.log(db);
+    // DexieJS docs: https://dexie.org/
+}
 
+// creating table ui
 async function showTable(newBookTitle) {
   const tBody = document.querySelector('tbody');
   const columns = ['cover', 'title', 'author', 'numberOfPages', 'synopsis', 'publishDate', 'rating'];
+  // prevents default books from populating every time function is called
   tBody.innerHTML='';
+  // creates the rows
     let allBooks = await db.books.where('numberOfPages').aboveOrEqual(0).toArray()
 
     for (let i = allBooks.length - 1; i >= 0; i--) {
@@ -11,29 +32,44 @@ async function showTable(newBookTitle) {
       for (let j = 0; j < columns.length; j++) {
         var td = document.createElement('td');
         var value = allBooks[i][columns[j]]
-        td.innerText = value ? value : null;
-        row.append(td);
+        if(j>0){
+          td.innerText = value ? value : null;
+          row.append(td);
+        } else{
+          td.innerHTML = `<img src=${value}>`;
+          row.append(td);
+        }
+
       }
+      // adding delete button to table
       const deleteBtn = document.createElement('button');
       deleteBtn.innerText = 'Delete';
       row.append(deleteBtn);
       tBody.append(row);
-
+      // event listener for delete button
       deleteBtn.addEventListener("click", function(){
         deleteBook(allBooks[i].title);
       })
+      // adding edit button to table
+      const editBtn = document.createElement('button');
+      editBtn.innerText = 'Edit';
+      row.append(editBtn);
+      tBody.append(row);
+      // adding event listener to edit button
+      editBtn.addEventListener("click", function(event){
+        document.getElementById("inputTitle").setAttribute('value',allBooks[i].title);
+        document.getElementById("inputAuthor").setAttribute('value',allBooks[i].author);
+        document.getElementById("inputPages").setAttribute('value',allBooks[i].numberOfPages);
+        document.getElementById("inputCover").setAttribute('value',allBooks[i].cover);
+        document.getElementById("inputSynopsis").setAttribute('value',allBooks[i].synopsis);
+        document.getElementById("inputDate").setAttribute('value',allBooks[i].publishDate);
+        document.getElementById("inputRating").setAttribute('value',allBooks[i].rating);
+        document.getElementById("formSubmit").innerHTML="Save Changes"
+        document.getElementById("addBook").innerHTML="❀ Edit Book... ❀"
+        event.preventDefault();
+      })
     }
 }
-
-function onDatabaseReady() {
-    showTable() // DO NOT TOUCH THIS LINE until step #4
-    document.querySelector(".btn").addEventListener("click",function(event){
-      event.preventDefault();
-    });
-    console.log(db);
-    // DexieJS docs: https://dexie.org/
-}
-
 
 function deleteBook(key) {
   var deletedBook = db.books.delete(key);
@@ -67,15 +103,18 @@ function addBook(event) {
 }
 
 
-function editBook(event,obj) {
+function editBook(title,obj) {
 
-  var updatedBook = db.books.update(event,obj);
+  var updatedBook = db.books.update(title,obj);
+  console.log("hi");
+  document.getElementById("inputTitle").setAttribute('placeholder',allBooks[i].title)
 
   updatedBook.then(function(resolved) {
     console.log(resolved)
   }).catch(function(rejected) {
     console.log(rejected);
   })
+
 }
 
 // document.getElementsByClassName("deleteButton").addEventListener("click", deleteBook());

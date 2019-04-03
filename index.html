@@ -4,11 +4,12 @@
     <title>IndexedDB Assignment - DexieJS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   </head>
   <body>
-    <h1>Diana's Magical Library</h1>
+    <h1>✿❀✿ Diana's Magical Library ✿❀✿</h1>
       <table class="table table-striped">
-          <thead class="diana">
+          <thead>
               <tr>
                   <th>Cover</th>
                   <th>Title</th>
@@ -17,13 +18,13 @@
                   <th>Synopsis</th>
                   <th>Publish Date</th>
                   <th>Rating</th>
-                  <th>Delete</th>
+                  <th>Delete/Edit</th>
               </tr>
           </thead>
           <tbody>
           </tbody>
       </table>
-      <hr>
+      <h1 id="addBook">❀ Add Book... ❀</h1>
       <form>
             <div class="form-row">
               <div class="form-group col-md-6">
@@ -42,7 +43,7 @@
             </div>
             <div class="form-group col-md-6">
               <label for="inputCover">Cover</label>
-              <input type="file" class="form-control" id="inputCover">
+              <input type="text" class="form-control" id="inputCover" placeholder="Add URL for the book cover here">
             </div>
           </div>
             <div class="form-group">
@@ -59,7 +60,7 @@
                 <input type="date" id="inputDate" class="form-control">
               </div>
             </div>
-            <button class="btn btn-primary" type="submit" onclick="addBook(event)">Submit</button>
+            <button class="btn" type="submit" id="formSubmit" onclick="addBook(event)">Submit</button>
           </form>
       <script defer src="http://unpkg.com/dexie@latest/dist/dexie.js"></script>
       <script defer src="./js/indexedDB.js"></script>
