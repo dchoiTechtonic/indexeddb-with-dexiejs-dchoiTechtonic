@@ -35,6 +35,7 @@ async function showTable(newBookTitle) {
         if(j>0){
           td.innerText = value ? value : null;
           row.append(td);
+          // else if it is the first column for the cover images
         } else{
           td.innerHTML = `<img src=${value}>`;
           row.append(td);
@@ -57,6 +58,7 @@ async function showTable(newBookTitle) {
       tBody.append(row);
       // adding event listener to edit button
       editBtn.addEventListener("click", function(event){
+        // pressing edit button populates the add book form with this book's information
         document.getElementById("inputTitle").setAttribute('value',allBooks[i].title);
         document.getElementById("inputAuthor").setAttribute('value',allBooks[i].author);
         document.getElementById("inputPages").setAttribute('value',allBooks[i].numberOfPages);
@@ -66,11 +68,12 @@ async function showTable(newBookTitle) {
         document.getElementById("inputRating").setAttribute('value',allBooks[i].rating);
         document.getElementById("formSubmit").innerHTML="Save Changes"
         document.getElementById("addBook").innerHTML="❀ Edit Book... ❀"
+        // preventing default to not refresh page every time
         event.preventDefault();
       })
     }
 }
-
+// deletes books
 function deleteBook(key) {
   var deletedBook = db.books.delete(key);
 
@@ -83,8 +86,9 @@ function deleteBook(key) {
 }
 
 
-
+// adding book using form with event handler on submit button
 function addBook(event) {
+  // adding book based on form values
   var addedBook = db.books.put({
     title: document.getElementById("inputTitle").value,
     author:document.getElementById("inputAuthor").value,
@@ -102,47 +106,17 @@ function addBook(event) {
     showTable(event);
 }
 
-
-function editBook(title,obj) {
-
-  var updatedBook = db.books.update(title,obj);
-  console.log("hi");
-  document.getElementById("inputTitle").setAttribute('placeholder',allBooks[i].title)
-
-  updatedBook.then(function(resolved) {
-    console.log(resolved)
-  }).catch(function(rejected) {
-    console.log(rejected);
-  })
-
-}
-
-// document.getElementsByClassName("deleteButton").addEventListener("click", deleteBook());
-// ************ 4. (BONUS) Comment out line 67 in ../index.HTML and write your own 'populateTableUI' function in app.js ************
+// did not use this function because I used addbook as my edit function as well....the only issue is that editing the title(object key) will just add a new book with a new title instead of actually editing the book....
 
 
-// Now that you’ve cloned your project lets start by testing our code. Let's start live
-//server and open up our project in the browser. Open up your console and you should see
-//some logs outputting book objects. These object are predefined in books.json and added to
-//our database called library_database in indexedDB. We can also navigate to the
-//application tab in the chrome console (storage in firefox) and take a look at the indexedDB
-//storage We created this for you in indexedDB.js if you feel inclined to take a look.
-
-// We've populated the table so the UI reflects what's currently in our local
-// library_database in indexedDB.  We've logged the database above so you can see exactly
-// what you're working with
-
-
-// 1.) Now add functionality to remove a row  which will need remove the object from the books store in
-//indexedDB database as well as the UI once the delete operation is complete. This will take some
-//effort on the UI. Use the title as your UID (Unique identifier) which you can find in the application console
-//in Chrome (storage in Firefox).
-
-// 2.) From here we want to be able to add a book. Hook up the form below the table to add a
-//book to the books store in indexedDB and auto-update the table without refreshing the page.
-//Hint: This add operation is on the front page of DexieJS.  Both is and Table.put() can be
-// used to add this book.
-
-// 3.) Now make each table row editable and update the database when the edit is complete. This will
-//take a lot of effort from the html to the js. Use the title as your UID (Unique identifier)
-//which you can find in the application console
+// function editBook(title,obj) {
+//   var updatedBook = db.books.update(title,obj);
+//   console.log("hi");
+//   document.getElementById("inputTitle").setAttribute('placeholder',allBooks[i].title)
+//
+//   updatedBook.then(function(resolved) {
+//     console.log(resolved)
+//   }).catch(function(rejected) {
+//     console.log(rejected);
+//   })
+// }
