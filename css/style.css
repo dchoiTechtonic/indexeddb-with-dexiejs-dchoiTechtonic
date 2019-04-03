@@ -1,13 +1,46 @@
 form {
   width: 60vw;
   margin:auto;
+  justify-content:center;
 }
-
+label {
+  color:pink;
+}
 table.table.table-striped{
   width: 80vw;
   margin:auto;
+  color:pink;
+  margin-bottom: 20px;
 }
-
 h1 {
   text-align:center;
+  color:pink;
+  font-size: 400%;
+  font-family: Pacifico;
+  text-shadow: 2px 2px 2px hotpink;
+  margin-bottom:10px;
+}
+button {
+  color: white;
+  background-color: pink;
+  width:80%;
+  border-radius: 18px;
+  margin: 3px 3px 3px 10px;
+  font-size: 12px;
+}
+img {
+  max-width: 80px;
+  min-height: 100px;
+  border: dotted 3px pink;
+}
+.btn {
+  background-color: pink;
+  color: white;
+  margin:0 0 150px 0;
+  border: 0;
+  width: 100%;
+}
+.btn:hover {
+  background-color: hotpink;
+  color:white;
 }
